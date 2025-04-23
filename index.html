@@ -19,6 +19,48 @@
                 <p>Our platform is currently under development. We're building tools to empower scientists to collaborate effectively with AI systems.</p>
             </section>
             
+            <section class="quiz-container">
+                <h2>AI in Science Quiz</h2>
+                <p>Test your knowledge and join our waitlist!</p>
+                <div id="quiz">
+                    <div class="quiz-question" data-question="1">
+                        <h3>Question 1: Which field was among the first to adopt AI for data analysis?</h3>
+                        <div class="options">
+                            <div class="option" data-value="1">Astronomy</div>
+                            <div class="option" data-value="2">Medicine</div>
+                            <div class="option" data-value="3">Geology</div>
+                        </div>
+                    </div>
+                    <div class="quiz-question" data-question="2" style="display:none;">
+                        <h3>Question 2: What percentage of scientific papers mentioned AI in 2023?</h3>
+                        <div class="options">
+                            <div class="option" data-value="1">Less than 5%</div>
+                            <div class="option" data-value="2">Around 15%</div>
+                            <div class="option" data-value="3">Over 25%</div>
+                        </div>
+                    </div>
+                    <div class="quiz-question" data-question="3" style="display:none;">
+                        <h3>Question 3: Scientists in the loop refers to:</h3>
+                        <div class="options">
+                            <div class="option" data-value="1">AI replacing scientists</div>
+                            <div class="option" data-value="2">Scientists verifying AI outputs</div>
+                            <div class="option" data-value="3">Scientists training AI models</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="result" style="display:none;">
+                    <h3>Thanks for taking our quiz!</h3>
+                    <div id="score-display"></div>
+                    <p class="score-message"></p>
+                    <div id="answers-review"></div>
+                    <p>Join our waitlist to learn more:</p>
+                    <form id="email-form">
+                        <input type="email" id="email" placeholder="Your email address" required>
+                        <button type="submit">Join Waitlist</button>
+                    </form>
+                </div>
+            </section>
+            
             <section class="features">
                 <div class="feature">
                     <h3>Human Expertise</h3>

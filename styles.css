@@ -59,6 +59,127 @@ section {
     color: #555;
 }
 
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto 60px;
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-container h2 {
+    color: #6e8efb;
+    margin-bottom: 15px;
+}
+
+.quiz-question {
+    margin: 30px 0;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.option {
+    background: #f0f3ff;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.option:hover {
+    background: #e0e7ff;
+    transform: translateY(-3px);
+}
+
+.option.selected {
+    background: #6e8efb;
+    color: white;
+}
+
+#result {
+    margin-top: 30px;
+}
+
+#score-display h2 {
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #6e8efb;
+}
+
+.score-message {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.answers-container {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.answer-review {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #ccc;
+}
+
+.answer-review.correct {
+    border-left-color: #4CAF50;
+}
+
+.answer-review.incorrect {
+    border-left-color: #F44336;
+}
+
+.answer-review h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.answer-review p {
+    margin: 5px 0;
+    font-size: 1rem;
+}
+
+#email-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 400px;
+    margin: 20px auto 0;
+}
+
+#email {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+#email-form button {
+    background: #6e8efb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#email-form button:hover {
+    background: #5a7dfa;
+}
+
 .features {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
