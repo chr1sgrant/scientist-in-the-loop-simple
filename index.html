@@ -75,6 +75,33 @@
                     <p>Design seamless interactions between scientists and AI tools.</p>
                 </div>
             </section>
+            
+            <section class="game-container">
+                <h2>Lab Assistant Game</h2>
+                <p>Help Dr. Maya train her AI assistant to recognize lab samples!</p>
+                <div id="game">
+                    <div class="game-screen">
+                        <div id="game-status">Welcome, lab assistant! Click Start to begin.</div>
+                        <div id="game-display">
+                            <div class="game-image-container">
+                                <div id="sample-image"></div>
+                            </div>
+                            <div class="game-controls">
+                                <div id="sample-options"></div>
+                                <button id="start-game">Start Game</button>
+                                <div id="game-timer">Time: <span>30</span>s</div>
+                                <div id="game-score">Score: <span>0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="game-results" style="display:none;">
+                        <h3>Research Session Complete!</h3>
+                        <div id="final-score"></div>
+                        <p id="score-feedback"></p>
+                        <button id="restart-game">Try Again</button>
+                    </div>
+                </div>
+            </section>
         </main>
         
         <footer>
