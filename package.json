@@ -1,0 +1,13 @@
+{
+  "name": "simple-website",
+  "version": "1.0.0",
+  "description": "Scientist in the Loop website",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module"
+}

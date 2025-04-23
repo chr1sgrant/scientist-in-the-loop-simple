@@ -150,6 +150,24 @@ section {
     font-size: 1rem;
 }
 
+.explanation {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.explanation a {
+    color: #6e8efb;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.explanation a:hover {
+    text-decoration: underline;
+}
+
 #email-form {
     display: flex;
     flex-direction: column;

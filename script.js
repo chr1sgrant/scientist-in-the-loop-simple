@@ -1,133 +1,159 @@
-document.addEventListener('DOMContentLoaded', function() {
+import quizQuestions from './quiz-data.js';
+document.addEventListener('DOMContentLoaded', function () {
     // Add a simple animation to header elements
     const header = document.querySelector('header');
-    header.style.opacity = '0';
-    header.style.transform = 'translateY(-20px)';
-    
-    setTimeout(() => {
-        header.style.transition = 'opacity 1s ease, transform 1s ease';
-        header.style.opacity = '1';
-        header.style.transform = 'translateY(0)';
-    }, 200);
-    
+    if (header) {
+        header.style.opacity = '0';
+        header.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            header.style.transition = 'opacity 1s ease, transform 1s ease';
+            header.style.opacity = '1';
+            header.style.transform = 'translateY(0)';
+        }, 200);
+    }
     // Animate feature cards sequentially
     const features = document.querySelectorAll('.feature');
     features.forEach((feature, index) => {
-        feature.style.opacity = '0';
-        feature.style.transform = 'translateY(20px)';
-        
+        const featureElement = feature;
+        featureElement.style.opacity = '0';
+        featureElement.style.transform = 'translateY(20px)';
         setTimeout(() => {
-            feature.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            feature.style.opacity = '1';
-            feature.style.transform = 'translateY(0)';
+            featureElement.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            featureElement.style.opacity = '1';
+            featureElement.style.transform = 'translateY(0)';
         }, 500 + (index * 200));
     });
-
+    // Generate quiz questions from data
+    const quizContainer = document.getElementById('quiz');
+    if (quizContainer) {
+        quizQuestions.forEach((question, index) => {
+            const isFirstQuestion = index === 0;
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'quiz-question';
+            questionDiv.dataset.question = question.id.toString();
+            if (!isFirstQuestion) {
+                questionDiv.style.display = 'none';
+            }
+            const questionTitle = document.createElement('h3');
+            questionTitle.textContent = `Question ${question.id}: ${question.text}`;
+            questionDiv.appendChild(questionTitle);
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            question.options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.dataset.value = option.id.toString();
+                optionDiv.textContent = option.text;
+                optionsDiv.appendChild(optionDiv);
+            });
+            questionDiv.appendChild(optionsDiv);
+            quizContainer.appendChild(questionDiv);
+        });
+    }
     // Quiz functionality
     const quiz = document.getElementById('quiz');
     const result = document.getElementById('result');
     const emailForm = document.getElementById('email-form');
+    if (!quiz || !result || !emailForm)
+        return;
     let currentQuestion = 1;
     let score = 0;
     let userAnswers = {};
-    const correctAnswers = {1: 1, 2: 3, 3: 2}; // Correct answers for each question
-    
-    const questionText = {
-        1: "Which field was among the first to adopt AI for data analysis?",
-        2: "What percentage of scientific papers mentioned AI in 2023?",
-        3: "Scientists in the loop refers to:"
-    };
-    
-    const answerOptions = {
-        1: {1: "Astronomy", 2: "Medicine", 3: "Geology"},
-        2: {1: "Less than 5%", 2: "Around 15%", 3: "Over 25%"},
-        3: {1: "AI replacing scientists", 2: "Scientists verifying AI outputs", 3: "Scientists training AI models"}
-    };
-
     // Handle option selection
-    quiz.addEventListener('click', function(e) {
-        if (e.target.classList.contains('option')) {
+    quiz.addEventListener('click', function (e) {
+        const target = e.target;
+        if (target.classList.contains('option')) {
             // Remove previous selections for current question
             const currentOptions = document.querySelectorAll(`.quiz-question[data-question="${currentQuestion}"] .option`);
             currentOptions.forEach(option => option.classList.remove('selected'));
-            
             // Select clicked option
-            e.target.classList.add('selected');
-            
+            target.classList.add('selected');
             // Store user's answer and check if correct
-            const selectedValue = parseInt(e.target.getAttribute('data-value'));
+            const selectedValue = parseInt(target.getAttribute('data-value') || '0');
             userAnswers[currentQuestion] = selectedValue;
-            
-            if (selectedValue === correctAnswers[currentQuestion]) {
+            const question = quizQuestions.find(q => q.id === currentQuestion);
+            if (question && selectedValue === question.correctAnswerId) {
                 score++;
             }
-            
             // Move to next question after a short delay
             setTimeout(() => {
-                if (currentQuestion < 3) {
+                if (currentQuestion < quizQuestions.length) {
                     // Hide current question
-                    document.querySelector(`.quiz-question[data-question="${currentQuestion}"]`).style.display = 'none';
-                    
+                    const currentQuestionElement = document.querySelector(`.quiz-question[data-question="${currentQuestion}"]`);
+                    if (currentQuestionElement) {
+                        currentQuestionElement.style.display = 'none';
+                    }
                     // Show next question
                     currentQuestion++;
-                    document.querySelector(`.quiz-question[data-question="${currentQuestion}"]`).style.display = 'block';
-                } else {
+                    const nextQuestionElement = document.querySelector(`.quiz-question[data-question="${currentQuestion}"]`);
+                    if (nextQuestionElement) {
+                        nextQuestionElement.style.display = 'block';
+                    }
+                }
+                else {
                     // Show results
                     quiz.style.display = 'none';
-                    
                     // Display score
                     const scoreDisplay = document.getElementById('score-display');
                     const scoreMessage = document.querySelector('.score-message');
                     const answersReview = document.getElementById('answers-review');
-                    
-                    scoreDisplay.innerHTML = `<h2>Your Score: ${score}/3</h2>`;
-                    
+                    if (scoreDisplay) {
+                        scoreDisplay.innerHTML = `<h2>Your Score: ${score}/${quizQuestions.length}</h2>`;
+                    }
                     // Show different messages based on score
-                    if (score === 3) {
-                        scoreMessage.textContent = "Impressive! You're already an AI in science expert!";
-                    } else if (score === 2) {
-                        scoreMessage.textContent = "Great job! You know your stuff about AI in science.";
-                    } else if (score === 1) {
-                        scoreMessage.textContent = "Good try! There's more to learn about AI in science.";
-                    } else {
-                        scoreMessage.textContent = "Thanks for playing! Join our waitlist to learn more about AI in science.";
+                    if (scoreMessage) {
+                        if (score === quizQuestions.length) {
+                            scoreMessage.textContent = "Impressive! You're already an AI in science expert!";
+                        }
+                        else if (score === 2) {
+                            scoreMessage.textContent = "Great job! You know your stuff about AI in science.";
+                        }
+                        else if (score === 1) {
+                            scoreMessage.textContent = "Good try! There's more to learn about AI in science.";
+                        }
+                        else {
+                            scoreMessage.textContent = "Thanks for playing! Join our waitlist to learn more about AI in science.";
+                        }
                     }
-                    
                     // Display answers review
-                    let reviewHTML = '<div class="answers-container">';
-                    
-                    for (let i = 1; i <= 3; i++) {
-                        const isCorrect = userAnswers[i] === correctAnswers[i];
-                        const userAnswer = answerOptions[i][userAnswers[i]];
-                        const correctAnswer = answerOptions[i][correctAnswers[i]];
-                        
-                        reviewHTML += `
-                            <div class="answer-review ${isCorrect ? 'correct' : 'incorrect'}">
-                                <h4>Question ${i}: ${questionText[i]}</h4>
-                                <p>Your answer: ${userAnswer} ${isCorrect ? '✓' : '✗'}</p>
-                                ${!isCorrect ? `<p>Correct answer: ${correctAnswer}</p>` : ''}
-                            </div>
-                        `;
+                    if (answersReview) {
+                        let reviewHTML = '<div class="answers-container">';
+                        quizQuestions.forEach(question => {
+                            const userAnswer = userAnswers[question.id];
+                            const userAnswerText = question.options.find(opt => opt.id === userAnswer)?.text || "No answer";
+                            const correctAnswerText = question.options.find(opt => opt.id === question.correctAnswerId)?.text || "";
+                            const isCorrect = userAnswer === question.correctAnswerId;
+                            reviewHTML += `
+                                <div class="answer-review ${isCorrect ? 'correct' : 'incorrect'}">
+                                    <h4>Question ${question.id}: ${question.text}</h4>
+                                    <p>Your answer: ${userAnswerText} ${isCorrect ? '✓' : '✗'}</p>
+                                    ${!isCorrect ? `<p>Correct answer: ${correctAnswerText}</p>` : ''}
+                                    <div class="explanation">
+                                        <p><strong>Explanation:</strong> ${question.explanation}</p>
+                                        <p><strong>Citation:</strong> <a href="${question.citation}" target="_blank">${question.citation}</a></p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        reviewHTML += '</div>';
+                        answersReview.innerHTML = reviewHTML;
                     }
-                    
-                    reviewHTML += '</div>';
-                    answersReview.innerHTML = reviewHTML;
-                    
                     result.style.display = 'block';
                 }
             }, 500);
         }
     });
-
     // Handle email form submission
-    emailForm.addEventListener('submit', function(e) {
+    emailForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        const email = document.getElementById('email').value;
-        
+        const emailInput = document.getElementById('email');
+        if (!emailInput)
+            return;
+        const email = emailInput.value;
         // Here you would typically send this to your backend
         console.log('Email submitted:', email, 'Score:', score);
-        
         // Show thank you message
         emailForm.innerHTML = `<p>Thanks! We'll be in touch soon.</p>`;
     });
 });
+//# sourceMappingURL=script.js.map
