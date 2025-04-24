@@ -147,13 +147,50 @@ document.addEventListener('DOMContentLoaded', function () {
     emailForm.addEventListener('submit', function (e) {
         e.preventDefault();
         const emailInput = document.getElementById('email');
-        if (!emailInput)
+        const requiredConsent = document.getElementById('consent-required');
+        const marketingConsent = document.getElementById('consent-marketing');
+        const thirdPartyConsent = document.getElementById('consent-thirdparty');
+        if (!emailInput || !requiredConsent)
             return;
         const email = emailInput.value;
-        // Here you would typically send this to your backend
-        console.log('Email submitted:', email, 'Score:', score);
-        // Show thank you message
-        emailForm.innerHTML = `<p>Thanks! We'll be in touch soon.</p>`;
+        // Prepare data to send to backend
+        const formData = {
+            email,
+            consent: {
+                required: requiredConsent.checked,
+                marketing: marketingConsent ? marketingConsent.checked : false,
+                thirdParty: thirdPartyConsent ? thirdPartyConsent.checked : false,
+                timestamp: new Date().toISOString()
+            },
+            quizData: {
+                score,
+                totalQuestions: quizQuestions.length,
+                userAnswers
+            }
+        };
+        // Send data to the backend API
+        fetch('/api/waitlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+            if (data.success) {
+                // Show thank you message
+                emailForm.innerHTML = `<p>Thanks! We'll be in touch soon.</p>`;
+            }
+            else {
+                // Show error message
+                emailForm.innerHTML += `<p class="error">Sorry, there was an error. Please try again later.</p>`;
+            }
+        })
+            .catch(error => {
+            console.error('Error submitting form:', error);
+            emailForm.innerHTML += `<p class="error">Sorry, there was an error. Please try again later.</p>`;
+        });
     });
 });
 //# sourceMappingURL=script.js.map

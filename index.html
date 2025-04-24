@@ -16,7 +16,7 @@
         <main>
             <section class="about">
                 <h2>Coming Soon</h2>
-                <p>Our platform is currently under development. We're building tools to empower scientists to collaborate effectively with AI systems.</p>
+                <p>Currently under development. We're helping to build tools to empower scientists to collaborate effectively with AI systems.</p>
             </section>
             
             <section class="quiz-container">
@@ -33,7 +33,29 @@
                     <p>Join our waitlist to learn more:</p>
                     <form id="email-form">
                         <input type="email" id="email" placeholder="Your email address" required>
+                        
+                        <div class="consent-checkboxes">
+                            <div class="consent-item">
+                                <input type="checkbox" id="consent-required" required>
+                                <label for="consent-required">I consent to the collection and processing of my personal data as described in the <a href="privacy-policy.html" class="privacy-link" target="_blank">Privacy Policy</a>. (Required)</label>
+                            </div>
+                            
+                            <div class="consent-item">
+                                <input type="checkbox" id="consent-marketing">
+                                <label for="consent-marketing">I would like to receive marketing communications about products, services, and events. (Optional)</label>
+                            </div>
+                            
+                            <div class="consent-item">
+                                <input type="checkbox" id="consent-thirdparty">
+                                <label for="consent-thirdparty">I consent to my data being shared with third parties for marketing purposes. (Optional)</label>
+                            </div>
+                        </div>
+                        
                         <button type="submit">Join Waitlist</button>
+                        
+                        <div class="gdpr-notice">
+                            <p>Under GDPR, you have the right to access, rectify, and erase your data. To exercise these rights or for any questions about our data practices, please contact privacy@example.com.</p>
+                        </div>
                     </form>
                 </div>
             </section>

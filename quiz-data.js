@@ -1,15 +1,5 @@
 // Quiz data with each question paired with its options and correct answer
 const quizQuestions = [
-    // {
-    //   id: 1,
-    //   text: "Which field was among the first to adopt AI for data analysis?",
-    //   options: [
-    //     { id: 1, text: "Astronomy" },
-    //     { id: 2, text: "Medicine" },
-    //     { id: 3, text: "Geology" }
-    //   ],
-    //   correctAnswerId: 1
-    // },
     {
         id: 1,
         text: "What percentage of scientific papers mentioned AI in 2023?",
@@ -26,9 +16,9 @@ const quizQuestions = [
         id: 2,
         text: "Which of these words are disproportionately used by AI?",
         options: [
-            { id: 1, text: "disproportionately" },
-            { id: 2, text: "meticulously" },
-            { id: 3, text: "furthermore" }
+            { id: 1, text: "Disproportionately" },
+            { id: 2, text: "Meticulously" },
+            { id: 3, text: "Furthermore" }
         ],
         correctAnswerId: 2,
         citation: "https://www.scientificamerican.com/article/chatbots-have-thoroughly-infiltrated-scientific-publishing",
@@ -51,12 +41,12 @@ const quizQuestions = [
         text: "Scientist in the loop refers to:",
         options: [
             { id: 1, text: "AI replacing scientists" },
-            { id: 2, text: "Scientists verifying AI outputs" },
+            { id: 2, text: "Scientists guiding AI and verifying AI outputs" },
             { id: 3, text: "Scientists training AI models" }
         ],
         correctAnswerId: 2,
         citation: "https://www.scientistintheloop.com",
-        explanation: "AI is still very flawed and gets things wrong all the time... but in collaboration with human experts, we can be empowered to perform better science, far quicker than ever."
+        explanation: "AI is still very flawed and gets things wrong all the time... but in collaboration with human experts, we can be empowered to perform better science, quicker than ever."
     }
 ];
 export default quizQuestions;

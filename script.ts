@@ -173,14 +173,51 @@ document.addEventListener('DOMContentLoaded', function() {
     emailForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const emailInput = document.getElementById('email') as HTMLInputElement;
-        if (!emailInput) return;
+        const requiredConsent = document.getElementById('consent-required') as HTMLInputElement;
+        const marketingConsent = document.getElementById('consent-marketing') as HTMLInputElement;
+        const thirdPartyConsent = document.getElementById('consent-thirdparty') as HTMLInputElement;
+        
+        if (!emailInput || !requiredConsent) return;
         
         const email = emailInput.value;
         
-        // Here you would typically send this to your backend
-        console.log('Email submitted:', email, 'Score:', score);
+        // Prepare data to send to backend
+        const formData = {
+            email,
+            consent: {
+                required: requiredConsent.checked,
+                marketing: marketingConsent ? marketingConsent.checked : false,
+                thirdParty: thirdPartyConsent ? thirdPartyConsent.checked : false,
+                timestamp: new Date().toISOString()
+            },
+            quizData: {
+                score,
+                totalQuestions: quizQuestions.length,
+                userAnswers
+            }
+        };
         
-        // Show thank you message
-        emailForm.innerHTML = `<p>Thanks! We'll be in touch soon.</p>`;
+        // Send data to the backend API
+        fetch('/api/waitlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show thank you message
+                emailForm.innerHTML = `<p>Thanks! We'll be in touch soon.</p>`;
+            } else {
+                // Show error message
+                emailForm.innerHTML += `<p class="error">Sorry, there was an error. Please try again later.</p>`;
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting form:', error);
+            emailForm.innerHTML += `<p class="error">Sorry, there was an error. Please try again later.</p>`;
+        });
     });
 });

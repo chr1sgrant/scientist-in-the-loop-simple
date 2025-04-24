@@ -37,7 +37,7 @@ const quizQuestions: QuizQuestion[] = [
     ],
     correctAnswerId: 2,
     citation: "https://www.scientificamerican.com/article/chatbots-have-thoroughly-infiltrated-scientific-publishing",
-    explanation: "The number of publications showing signs of AI involvement is reapidly increasing. One way of detecting this is to look for the change in prevalence of words which are disproportionatley used by AI."
+    explanation: "The number of publications showing signs of AI involvement is rapidly increasing. One way of detecting this is to look for the change in prevalence of words which are disproportionatley used by AI."
   },
   {
     id: 3,
